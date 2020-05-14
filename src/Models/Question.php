@@ -26,6 +26,11 @@ class Question extends Model
         return $this->belongsTo(Section::class);
     }
 
+    public function question_type()
+    {
+        return $this->belongsTo(QuestionType::class, 'question_type_id');
+    }
+
     public function answers()
     {
         return $this->hasMany(Answer::class);

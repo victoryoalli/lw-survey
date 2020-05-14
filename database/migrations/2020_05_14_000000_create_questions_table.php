@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use VictorYoalli\LwSurvey\Models\QuestionType;
 
 class CreateQuestionsTable extends Migration
 {
@@ -18,7 +19,8 @@ class CreateQuestionsTable extends Migration
             $table->foreignId('survey_id');
             $table->foreignId('section_id')->nullable();
             $table->text('content');
-            $table->string('type')->default('text'); //text,radio,checkbox,select
+            $table->unsignedInteger('position')->default(0);
+            $table->unsignedInteger('question_type_id')->default(QuestionType::$single); //text,radio,checkbox,select
             $table->json('rules')->nullable();//number:min,max, email
             $table->timestamps();
         });

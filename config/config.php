@@ -6,6 +6,7 @@
 return [
     'models' => [
         'user' => 'App\User',
+        'user_id' => 'user_id'
     ],
     'database' => [
         'tables' => [
