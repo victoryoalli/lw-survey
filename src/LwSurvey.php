@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoryoalli\LwSurvey;
+namespace VictorYoalli\LwSurvey;
 
 class LwSurvey
 {

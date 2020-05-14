@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoryoalli\LwSurvey;
+namespace VictorYoalli\LwSurvey;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -14,20 +14,20 @@ class LwSurveyServiceProvider extends ServiceProvider
         /*
          * Optional methods to load your package assets
          */
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'lw-survey');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'lw-survey');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'lw-survey');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'lw-survey');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('lw-survey.php'),
+                __DIR__ . '/../config/config.php' => config_path('lw-survey.php'),
             ], 'config');
 
             // Publishing the views.
-            /*$this->publishes([
-                __DIR__.'/../resources/views' => resource_path('views/vendor/lw-survey'),
-            ], 'views');*/
+            $this->publishes([
+                __DIR__ . '/../resources/views' => resource_path('views/vendor/lw-survey'),
+            ], 'views');
 
             // Publishing assets.
             /*$this->publishes([
@@ -35,9 +35,9 @@ class LwSurveyServiceProvider extends ServiceProvider
             ], 'assets');*/
 
             // Publishing the translation files.
-            /*$this->publishes([
-                __DIR__.'/../resources/lang' => resource_path('lang/vendor/lw-survey'),
-            ], 'lang');*/
+            $this->publishes([
+                __DIR__ . '/../resources/lang' => resource_path('lang/vendor/lw-survey'),
+            ], 'lang');
 
             // Registering package commands.
             // $this->commands([]);
@@ -50,7 +50,7 @@ class LwSurveyServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'lw-survey');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'lw-survey');
 
         // Register the main class to use with the facade
         $this->app->singleton('lw-survey', function () {

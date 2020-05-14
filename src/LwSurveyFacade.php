@@ -1,11 +1,11 @@
 <?php
 
-namespace Victoryoalli\LwSurvey;
+namespace VictorYoalli\LwSurvey;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Victoryoalli\LwSurvey\Skeleton\SkeletonClass
+ * @see \VictorYoalli\LwSurvey\Skeleton\SkeletonClass
  */
 class LwSurveyFacade extends Facade
 {

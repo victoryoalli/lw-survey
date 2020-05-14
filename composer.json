@@ -3,7 +3,9 @@
     "description": "Laravel Livewire Survey PHP Package",
     "keywords": [
         "victoryoalli",
-        "lw-survey"
+        "livewire",
+        "laravel",
+        "survey"
     ],
     "homepage": "https://github.com/victoryoalli/lw-survey",
     "license": "MIT",
@@ -17,7 +19,8 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/support": "^6.0"
+        "illuminate/support": "^6.0",
+        "livewire/livewire": "^1.0"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
@@ -25,18 +28,17 @@
     },
     "autoload": {
         "psr-4": {
-            "Victoryoalli\\LwSurvey\\": "src"
+            "VictorYoalli\\LwSurvey\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Victoryoalli\\LwSurvey\\Tests\\": "tests"
+            "VictorYoalli\\LwSurvey\\Tests\\": "tests"
         }
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
         "sort-packages": true
@@ -44,10 +46,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Victoryoalli\\LwSurvey\\LwSurveyServiceProvider"
+                "VictorYoalli\\LwSurvey\\LwSurveyServiceProvider"
             ],
             "aliases": {
-                "LwSurvey": "Victoryoalli\\LwSurvey\\LwSurveyFacade"
+                "LwSurvey": "VictorYoalli\\LwSurvey\\LwSurveyFacade"
             }
         }
     }

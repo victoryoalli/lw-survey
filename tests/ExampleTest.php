@@ -1,9 +1,9 @@
 <?php
 
-namespace Victoryoalli\LwSurvey\Tests;
+namespace VictorYoalli\LwSurvey\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Victoryoalli\LwSurvey\LwSurveyServiceProvider;
+use VictorYoalli\LwSurvey\LwSurveyServiceProvider;
 
 class ExampleTest extends TestCase
 {
@@ -12,7 +12,7 @@ class ExampleTest extends TestCase
     {
         return [LwSurveyServiceProvider::class];
     }
-    
+
     /** @test */
     public function true_is_true()
     {
