@@ -35,6 +35,8 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
+> Some ideas taken from [Matt Daneshvar's Laravel Survey](https://github.com/matt-daneshvar/laravel-survey)
+
 ### Security
 
 If you discover any security related issues, please email victoryoalli@gmail.com instead of using the issue tracker.

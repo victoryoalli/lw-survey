@@ -11,9 +11,6 @@ class LwSurveyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /*
-         * Optional methods to load your package assets
-         */
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'lw-survey');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'lw-survey');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -22,12 +19,16 @@ class LwSurveyServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('lw-survey.php'),
-            ], 'config');
+            ], ['config', 'lw-survey']);
 
             // Publishing the views.
             $this->publishes([
                 __DIR__ . '/../resources/views' => resource_path('views/vendor/lw-survey'),
-            ], 'views');
+            ], ['views', 'lw-survey']);
+
+            $this->publishes([
+                __DIR__ . '/../database/migrations/' => database_path('migrations'),
+            ], ['migrations', 'lw-survey']);
 
             // Publishing assets.
             /*$this->publishes([
@@ -37,7 +38,7 @@ class LwSurveyServiceProvider extends ServiceProvider
             // Publishing the translation files.
             $this->publishes([
                 __DIR__ . '/../resources/lang' => resource_path('lang/vendor/lw-survey'),
-            ], 'lang');
+            ], ['lang', 'lw-survey']);
 
             // Registering package commands.
             // $this->commands([]);
