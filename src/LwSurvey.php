@@ -2,7 +2,12 @@
 
 namespace VictorYoalli\LwSurvey;
 
+use Illuminate\Support\Facades\App;
+
 class LwSurvey
 {
-    // Build your next great package.
+    public function routes()
+    {
+        App::make('router')->livewire('surveys', 'survey');
+    }
 }

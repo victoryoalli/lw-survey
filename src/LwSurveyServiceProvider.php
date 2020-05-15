@@ -3,6 +3,7 @@
 namespace VictorYoalli\LwSurvey;
 
 use Illuminate\Support\ServiceProvider;
+use VictorYoalli\LwSurvey\Http\Livewire\Survey;
 
 class LwSurveyServiceProvider extends ServiceProvider
 {
