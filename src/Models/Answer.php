@@ -12,7 +12,7 @@ class Answer extends Model
         $this->setTable(config('lw-survey.database.tables.answers'));
     }
 
-    protected $fillable = ['entry_id', 'survey_id', 'question_id', 'option_id', 'content', 'points', config('lw-survey.models.user_id')];
+    protected $fillable = ['entry_id', 'survey_id', 'question_id', 'option_id', 'content', 'points','user_id'];
 
     public function entry()
     {

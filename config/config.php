@@ -5,8 +5,8 @@
  */
 return [
     'models' => [
-        'user' => 'App\User',
-        'user_id' => 'user_id'
+        'user' => 'App\Models\User',
+        'user_id' => 'user_id',
     ],
     'database' => [
         'tables' => [

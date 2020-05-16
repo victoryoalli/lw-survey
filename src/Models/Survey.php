@@ -30,4 +30,8 @@ class Survey extends Model
     {
         return $this->hasMany(Entry::class);
     }
+
+    public function questionsNotAnswered(Entry $entry=null){
+       return $this->questions()->notAnswered($entry);
+    }
 }

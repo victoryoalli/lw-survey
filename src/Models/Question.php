@@ -41,8 +41,29 @@ class Question extends Model
         return $this->hasMany(Option::class);
     }
 
+    
+    public function scopeNotAnswered($query,Entry $entry=null){
+        $answers = Answer::where('entry_id',$entry->id)->get()->pluck('question_id');
+        return $query->whereNotIn('id',$answers);
+    }
+
     public function scopeWithoutSection($query)
     {
         return $query->where('section_id', null);
+    }
+    
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        //Ensure the question's survey is the same as the section it belongs to.
+        static::creating(function (self $question) {
+            $question->load('section');
+
+            if ($question->section) {
+                $question->survey_id = $question->section->survey_id;
+            }
+        });
     }
 }
