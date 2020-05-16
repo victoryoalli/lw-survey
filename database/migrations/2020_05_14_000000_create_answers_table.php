@@ -19,7 +19,7 @@ class CreateAnswersTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('survey_id');
             $table->foreignId('question_id');
-            $table->foreignId('option_id');
+            $table->foreignId('option_id')->nullable();
             $table->text('content')->nullable();
             $table->unsignedInteger('points')->nullable();
             $table->timestamps();
