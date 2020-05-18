@@ -41,34 +41,52 @@ class Survey extends Component
 
     public function answer($option)
     {
+        $content = null;
+        $points = null;
+        $option_id = null;
         $option = Option::find($option);
         switch ($this->question->question_type->id) {
             case QuestionType::$single:
-                $content = '';
                 $points = $option->value;
                 $option_id = $option->id;
                 break;
             case QuestionType::$multiple:
                 $content = collect($this->selected)->toJson();
-                $points = null;
-                $option_id = null;
                 break;
             case QuestionType::$text:
                 $content = $this->text;
-                $points = null;
-                $option_id = null;
                 break;
         }
 
-        $answer = Answer::create([
-            'entry_id'=>$this->entry->id,
-            'user_id'=>$this->user->id,
-            'survey_id'=>$this->user->id,
-            'question_id'=>$this->question->id,
-            'option_id'=>$option_id,
-            'points'=>$points,
-            'content' =>$content
-        ]);
+        
+        if(count($this->selected)>0){
+            foreach ($this->selected as $option) {
+                $option = Option::find($option);
+                $points = $option->value;
+                $option_id = $option->id;
+                Answer::create([
+                    'entry_id'=>$this->entry->id,
+                    'user_id'=>$this->user->id,
+                    'survey_id'=>$this->user->id,
+                    'question_id'=>$this->question->id,
+                    'option_id'=>$option_id,
+                    'points'=>$points,
+                    'content' =>$content
+                ]);
+            }
+        }else{
+            $answer = Answer::create([
+                'entry_id'=>$this->entry->id,
+                'user_id'=>$this->user->id,
+                'survey_id'=>$this->user->id,
+                'question_id'=>$this->question->id,
+                'option_id'=>$option_id,
+                'points'=>$points,
+                'content' =>$content
+            ]);
+        }
+        $this->selected = [];
+        $this->text = null;
         $this->question = $this->survey->questionsNotAnswered($this->entry)->inRandomOrder()->first();
         if($this->question==null && $this->survey->questions->count()>0){
             $this->question = null;

@@ -1,14 +1,14 @@
-<div>
-    {{-- Success is as dangerous as failure. --}}
-    <h1>Hello World</h1>
-    <h1 class="mt-6" style="text-size:3rem;">{{$survey->name}}</h1>
+<div style="margin-top: 1em;border:1px solid;border-color:#d2d6dd;border-radius:0.25rem;">
+    <div style="font-size: 3rem;text-align: center;font-weight: 500;">{{$survey->name}}</div>
     @if($survey->questions->count()===0)
     <p>No hay preguntas</p>
+    @elseif($question==null)
+        <p>Finished</p>
     @elseif($survey->questions->count()>0)
-    <h3>
-        {{$question->content}}
-    </h3>
     
+    <div>
+        {{$question->content}}
+    </div>
     @if($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$single)
         <div class="flex">
             @foreach($question->options as $option)
@@ -30,8 +30,5 @@
         </div>
         <button class="p-2 mx-2 text-white bg-primary-500" wire:click="answer()">Guardar</button>
     @endif
-
-    @elseif($question==null)
-        <p>Finished</p>
     @endif
 </div>
