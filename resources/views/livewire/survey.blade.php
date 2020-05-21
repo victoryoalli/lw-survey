@@ -1,5 +1,8 @@
 <div style="margin-top: 1em;border:1px solid;border-color:#d2d6dd;border-radius:0.25rem;">
     <div style="font-size: 3rem;text-align: center;font-weight: 500;">{{$survey->name}}</div>
+    @if($section)
+    <div style="font-size: 3rem;text-align: center;font-weight: 500;">{{$section->name}}</div>
+    @endif
     @if($survey->questions->count()===0)
         <p>No hay preguntas</p>
     @elseif($questions->count()==0)
@@ -15,7 +18,7 @@
             <div class="" style="margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
                 <label>{{$option->content}}</label>
-                <input style="margin-left:.5em;margin-right:.5em;" type="radio" name="{{'question_'.$question->id}}" value="{{$option->id}}" wire:model="single.{{$question->id}}" />
+                <input style="margin-left:.5em;margin-right:.5em;" type="radio" id="{{'question_radio'.$question->id.$option->id}}" name="{{'question_radio'.$question->id.$option->id}}"  value="{{$option->id}}" wire:model="single.{{$question->id}}" />
                 <!-- <button class="p-2 mx-2 text-white bg-primary-500" wire:click="answer({{$option->id}})">{{$option->content}}</button> -->
                 @endforeach
             </div>
@@ -23,14 +26,14 @@
             <div class="text-primary-500" style="align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
                 <label>{{$option->content}}</label>
-                <input name="options[]" id="" wire:model="multiple.{{ $question->id }}.{{$option->id}}" type="checkbox" />
+                <input name="options[]" id="" wire:model="multiple.{{ $question->id }}.{{$option->id}}" id="{{'question_check'.$question->id.$option->id}}" name="{{'question_check'.$question->id.$option->id}}" type="checkbox" />
                 @endforeach
             </div>
             <!-- <button class="p-2 mx-2 text-white bg-primary-500" wire:click="answer()">Guardar</button> -->
             @elseif($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$text)
             <div class="text-primary-500 my-2" style="margin-top: 1em">
                 <label class="w-full">Escribe tu respuesta</label></br>
-                <input type="text" class="border" wire:model="text.{{$question->id}}" />
+                <input type="text" class="border" wire:model="text.{{$question->id}}" id="{{'question_'.$question->id}}"/>
             </div>
             <!-- <button class="p-2 mx-2 text-white bg-primary-500" wire:click="answer()">Guardar</button> -->
             @endif

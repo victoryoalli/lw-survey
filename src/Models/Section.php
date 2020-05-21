@@ -23,4 +23,7 @@ class Section extends Model
     {
         return $this->hasMany(Question::class);
     }
+    public function questionsNotAnswered(Entry $entry=null){
+        return $this->questions()->notAnswered($entry);
+    }
 }

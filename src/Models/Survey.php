@@ -22,29 +22,35 @@ class Survey extends Model
         return $this->hasMany(Section::class);
     }
 
+    public function hasSections(){
+        return $this->sections()->exists();
+    }
+
     public function questions()
     {
         return $this->hasMany(Question::class);
     }
+    
 
     public function entries()
     {
         return $this->hasMany(Entry::class);
     }
-    public function notSections()
+    public function withoutSection()
     {
         return $this->questions()->withoutSection();
     }
     public function limitExceeded($user_id){
         if($this->limit_entries_per_participant==0)return false;
-        $entry = Entry::where('user_id',$user_id)->where('survey_id',$this->id)->where('completed_at','!=',null)->get();
+        $entry = Entry::where('user_id',$user_id)->where('survey_id',$this->id)->whereNotNull('completed_at')->get();
         if($entry->count()>=$this->limit_entries_per_participant)return true;
         return false;
     }
 
     public function questionsNotAnswered(Entry $entry=null){
-       return $this->questions()->notAnswered($entry);
+        return $this->questions()->notAnswered($entry);
     }
+    
 
     public function getLimitEntriesPerParticipantAttribute(){
         return $this->settings==null?0:$this->settings->get('limit_entries_per_participant')??0;

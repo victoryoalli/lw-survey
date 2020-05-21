@@ -3,6 +3,8 @@
 namespace VictorYoalli\LwSurvey\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Question extends Model
 {
@@ -42,9 +44,13 @@ class Question extends Model
     }
 
     
+    
     public function scopeNotAnswered($query,Entry $entry=null){
-        $answers = Answer::where('entry_id',$entry->id)->get()->pluck('question_id');
-        return $query->whereNotIn('id',$answers);
+        return $query->whereDoesntHave('answers',function($q)use($entry){
+            return $q->where('entry_id',$entry->id);
+        });
+       // $answers = Answer::where('entry_id',$entry->id)->get()->pluck('question_id');
+        //return $query->whereNotIn('id',$answers); 
     }
 
     public function scopeWithoutSection($query)
