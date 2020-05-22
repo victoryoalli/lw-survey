@@ -1,7 +1,7 @@
-<div style="margin-top: 1em;border:1px solid;border-color:#d2d6dd;border-radius:0.25rem;">
-    <div style="font-size: 3rem;text-align: center;font-weight: 500;">{{$survey->name}}</div>
+<div style="margin:1rem; padding:1rem; border:1px solid;border-color:#d2d6dd;border-radius:0.25rem;">
+    <h1 style="margin:1rem auto .5rem; font-size:2.5em;">{{$survey->name}}</h1>
     @if($section)
-    <div style="font-size: 3rem;text-align: center;font-weight: 500;">{{$section->name}}</div>
+        <h2 style="margin:1rem auto .5rem; font-size:2em;">{{$section->name}}</h2>
     @endif
     @if($survey->questions->count()===0)
         <p>No hay preguntas</p>
@@ -9,36 +9,37 @@
         <p>Finished</p>
     @elseif($survey->questions->count()>0)
         @foreach($questions as $question)
-        <div style="text-align: center;">
-            <div>
-                {{$question->content}}
-            </div>
-
+        <div style="margin-top:2rem;">
+            <p style="font-size:1.25em;"> {{$question->content}} </p>
             @if($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$single)
-            <div class="" style="margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
+            <div style="margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
-                <label>{{$option->content}}</label>
-                <input style="margin-left:.5em;margin-right:.5em;" type="radio" id="{{'question_radio'.$question->id.$option->id}}" name="{{'question_radio'.$question->id.$option->id}}"  value="{{$option->id}}" wire:model="single.{{$question->id}}" />
-                <!-- <button class="p-2 mx-2 text-white bg-primary-500" wire:click="answer({{$option->id}})">{{$option->content}}</button> -->
+                <label style="margin-right: 1rem; padding: .5rem;">
+                    <input id="{{'question_radio'.$question->id.$option->id}}" name="{{'question_radio'.$question->id.$option->id}}" value="{{$option->id}}" wire:model="single.{{$question->id}}" type="radio" />
+                    <span style="margin: auto 1rem;">{{$option->content}}</span>
+                </label>
                 @endforeach
             </div>
             @elseif($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$multiple)
-            <div class="text-primary-500" style="align-items: center;margin-top: 1em">
+            <div style="margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
-                <label>{{$option->content}}</label>
-                <input name="options[]" id="" wire:model="multiple.{{ $question->id }}.{{$option->id}}" id="{{'question_check'.$question->id.$option->id}}" name="{{'question_check'.$question->id.$option->id}}" type="checkbox" />
+                <label style="margin-right: 1rem; padding: .5rem;">
+                    <input name="options[]" id="" wire:model="multiple.{{ $question->id }}.{{$option->id}}" id="{{'question_check'.$question->id.$option->id}}" name="{{'question_check'.$question->id.$option->id}}" type="checkbox" />
+                    <span style="margin:auto 1rem;"> {{$option->content}} </span>
+                </label>
                 @endforeach
             </div>
-            <!-- <button class="p-2 mx-2 text-white bg-primary-500" wire:click="answer()">Guardar</button> -->
             @elseif($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$text)
-            <div class="text-primary-500 my-2" style="margin-top: 1em">
-                <label class="w-full">Escribe tu respuesta</label></br>
-                <input type="text" class="border" wire:model="text.{{$question->id}}" id="{{'question_'.$question->id}}"/>
+            <div style="margin-top: 1em">
+                <input style="width:100%; margin:0 auto 1rem ; line-height: 1.8rem;padding:.5rem;font-size:1.2em; border-radius: 5px; border:1px solid #999;" type="text" wire:model="text.{{$question->id}}" id="{{'question_'.$question->id}}"/>
             </div>
-            <!-- <button class="p-2 mx-2 text-white bg-primary-500" wire:click="answer()">Guardar</button> -->
             @endif
         </div>
         @endforeach
-        <button class="p-2 mx-2 text-white bg-primary-500" wire:click="answer()">Guardar</button>
+        <div style="display:flex;justify-content: flex-end;">
+            <button style="background-color:#369; color:#fff; padding:.5rem; margin:1rem; border-radius: 5px;" wire:click="save()">
+                <svg style="height: 1.5rem; width:1.5rem" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+            </button>
+        </div>
     @endif
 </div>
