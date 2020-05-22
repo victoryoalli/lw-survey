@@ -18,8 +18,8 @@ class Survey extends Component
     public $questions = [];
     public $user;
     public $multiple = [];
-    public $single = [];
-    public $text = [];
+    public $single = null;
+    public $text = '';
     public $section = null;
 
     public function mount(ModelSurvey $survey, $user_id)
@@ -62,6 +62,19 @@ class Survey extends Component
     public function select($question_id, $option_id)
     {
         $this->single[$question_id] = $option_id;
+    }
+
+    public function multipleValue($question_id, $option_id)
+    {
+        return true;
+        $value = $this->multiple[$question_id][$option_id] ?? false;
+        return $value;
+    }
+
+    public function multipleSelect($question_id, $option_id)
+    {
+        $value = $this->multiple[$question_id][$option_id] ?? false;
+        $this->multiple[$question_id][$option_id] = !$value;
     }
 
     protected function currentSection($survey, $entry)
