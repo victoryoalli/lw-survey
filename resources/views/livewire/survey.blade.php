@@ -1,6 +1,5 @@
 <div style="margin:1rem; padding:1rem; border:1px solid;border-color:#d2d6dd;border-radius:0.25rem;">
     <h1 style="margin:1rem auto .5rem; font-size:2.5em;">{{$survey->name}}</h1>
-    <pre>{{json_encode($multiple)}}</pre>
     @if($section)
         <h2 style="margin:1rem auto .5rem; font-size:2em;">{{$section->name}}</h2>
     @endif
