@@ -3,8 +3,6 @@
 namespace VictorYoalli\LwSurvey\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-
 
 class Question extends Model
 {
@@ -14,7 +12,7 @@ class Question extends Model
         $this->setTable(config('lw-survey.database.tables.questions'));
     }
 
-    protected $fillable = ['survey_id', 'section_id', 'content', 'type', 'rules'];
+    protected $fillable = ['survey_id', 'section_id', 'content', 'question_type_id', 'rules'];
 
     protected $casts = ['rules' => 'array'];
 
@@ -43,21 +41,19 @@ class Question extends Model
         return $this->hasMany(Option::class);
     }
 
-    
-    
-    public function scopeNotAnswered($query,Entry $entry=null){
-        return $query->whereDoesntHave('answers',function($q)use($entry){
-            return $q->where('entry_id',$entry->id);
+    public function scopeNotAnswered($query, Entry $entry = null)
+    {
+        return $query->whereDoesntHave('answers', function ($q) use ($entry) {
+            return $q->where('entry_id', $entry->id);
         });
-       // $answers = Answer::where('entry_id',$entry->id)->get()->pluck('question_id');
-        //return $query->whereNotIn('id',$answers); 
+        // $answers = Answer::where('entry_id',$entry->id)->get()->pluck('question_id');
+        //return $query->whereNotIn('id',$answers);
     }
 
     public function scopeWithoutSection($query)
     {
         return $query->where('section_id', null);
     }
-    
 
     protected static function boot()
     {
