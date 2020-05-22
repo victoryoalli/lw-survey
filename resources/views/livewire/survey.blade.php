@@ -20,7 +20,7 @@
                 <label>{{$option->content}}</label>
                 <input style="margin-left:.5em;margin-right:.5em;" type="radio" id="{{'question_radio'.$question->id.$option->id}}" name="{{'question_radio'.$question->id.$option->id}}"  value="{{$option->id}}" wire:model="single.{{$question->id}}" />
                 <!-- <button class="p-2 mx-2 text-white bg-primary-500" wire:click="answer({{$option->id}})">{{$option->content}}</button> -->
-                @endforeach
+                @endforeachse
             </div>
             @elseif($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$multiple)
             <div class="text-primary-500" style="align-items: center;margin-top: 1em">
