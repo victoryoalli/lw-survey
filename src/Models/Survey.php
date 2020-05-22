@@ -73,7 +73,7 @@ class Survey extends Model
 
     public function getGroupQuestionsPerSectionAttribute():bool
     {
-        return $this->settings->get('group_questions_per_section') ?? false;
+        return $this->settings == null ? false : $this->settings->get('group_questions_per_section') ?? false;
     }
 
     public function setGroupQuestionsPerSectionAttribute($value)
@@ -83,7 +83,7 @@ class Survey extends Model
 
     public function getQuestionsPerPageAttribute()
     {
-        return $this->settings->get('questions_per_page') ?? 1;
+        return $this->settings == null ? 0 : $this->settings->get('questions_per_page') ?? 1;
     }
 
     public function setQuestionsPerPageAttribute($value)

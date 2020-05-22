@@ -15,7 +15,6 @@
             <div style="display:flex; margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
 
-{{-- <label style="margin-right: 1rem; padding: .5rem;"> <input id="{{'question_single'.$question->id.$option->id}}" name="{{'question_single'.$question->id}}" value="{{$option->id}}" wire:model="single.{{$question->id}}" type="radio" /> </label> --}}
                     <div style="@if($single[$question->id]==$option->id) border:3px solid blue; @endif margin:.25rem; padding:1rem; background-color:gray;" wire:click="select({{$question->id}},{{$option->id}})">
                         <span style="margin: auto 1rem;">{{$option->content}}</span>
                     </div>
@@ -24,12 +23,7 @@
             @elseif($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$multiple)
             <div style="display:flex;margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
-                {{--
-                <label style="margin-right: 1rem; padding: .5rem;">
-                    <input name="question_multiple[]" id="" wire:model="multiple.{{ $question->id }}.{{$option->id}}" id="{{'question_check'.$question->id.$option->id}}" name="{{'question_check'.$question->id.$option->id}}" type="checkbox" />
-                    <span style="margin:auto 1rem;"> {{$option->content}} </span>
-                </label>
-                --}}
+
                 <div style="@if(isset($multiple[$question->id]) &&isset($multiple[$question->id][$option->id]) &&$multiple[$question->id][$option->id]==true ) border:3px solid blue; @endif margin:1rem;padding:1rem;background-color:#ccc;" wire:click="multipleSelect({{$question->id}},{{$option->id}})">
                     <span style="margin:auto 1rem;"> {{$option->content}} </span>
                 </div>
