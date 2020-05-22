@@ -15,7 +15,7 @@ class CreateQuestionsTable extends Migration
     public function up()
     {
         Schema::create(config('lw-survey.database.tables.questions'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->foreignId('survey_id');
             $table->foreignId('section_id')->nullable();
             $table->text('content');

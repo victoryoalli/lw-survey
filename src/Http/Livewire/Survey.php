@@ -59,6 +59,11 @@ class Survey extends Component
         }
     }
 
+    public function select($question_id, $option_id)
+    {
+        $this->single[$question_id] = $option_id;
+    }
+
     protected function currentSection($survey, $entry)
     {
         foreach ($survey->sections as $section) {

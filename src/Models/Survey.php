@@ -3,6 +3,7 @@
 namespace VictorYoalli\LwSurvey\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Survey extends Model
 {
@@ -88,5 +89,13 @@ class Survey extends Model
     public function setQuestionsPerPageAttribute($value)
     {
         $this->settings = collect($this->settings)->put('questions_per_page', $value);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function (self $survey) {
+            $survey->slug = Str::slug($survey->name);
+        });
     }
 }

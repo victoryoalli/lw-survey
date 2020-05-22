@@ -14,7 +14,7 @@ class CreateOptionsTable extends Migration
     public function up()
     {
         Schema::create(config('lw-survey.database.tables.options'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->foreignId('question_id');
             $table->text('content');//html
             $table->unsignedInteger('value')->nullable();

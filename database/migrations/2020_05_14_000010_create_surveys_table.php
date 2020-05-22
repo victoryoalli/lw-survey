@@ -14,8 +14,9 @@ class CreateSurveysTable extends Migration
     public function up()
     {
         Schema::create(config('lw-survey.database.tables.surveys'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name');
+            $table->string('slug')->nullable();
             $table->json('settings')->nullable();
             $table->timestamps();
         });
