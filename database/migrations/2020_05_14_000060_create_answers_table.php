@@ -14,7 +14,7 @@ class CreateAnswersTable extends Migration
     public function up()
     {
         Schema::create(config('lw-survey.database.tables.answers'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->foreignId('entry_id');
             $table->foreignId('user_id');
             $table->foreignId('survey_id');
@@ -23,6 +23,7 @@ class CreateAnswersTable extends Migration
             $table->text('content')->nullable();
             $table->unsignedInteger('points')->nullable();
             $table->timestamps();
+            $table->foreign('entry_id')->references('id')->on(config('lw-survey.database.tables.entries'))->onDelete('cascade');
         });
     }
 
@@ -34,5 +35,8 @@ class CreateAnswersTable extends Migration
     public function down()
     {
         Schema::dropIfExists(config('lw-survey.database.tables.answers'));
+        Schema::table(config('lw-survey.database.tables.answers'), function (Blueprint $table) {
+            $table->dropForeign(['entry_id']);
+        });
     }
 }

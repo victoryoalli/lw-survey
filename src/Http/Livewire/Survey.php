@@ -24,6 +24,7 @@ class Survey extends Component
 
     public function mount(ModelSurvey $survey, $user_id)
     {
+        $survey->load('questions');
         $this->survey = $survey;
         if ($survey->questions->count() === 0) {
             return;
@@ -43,25 +44,30 @@ class Survey extends Component
         if ($survey->hasSections()) {
             $this->section = $this->currentSection($survey, $this->entry);
             if (!is_null($this->section)) {
-                $query = $this->section->questionsNotAnswered($this->entry);
+                $query = $this->section->questions()->notAnswered($this->entry)->inRandomOrder();
                 if ($survey->group_questions_per_section && $survey->questions_per_page > 0) {
                     $this->questions = $query->take($survey->questions_per_page)->get();
                 } else {
                     $this->questions = $query->get();
                 }
             } else {
-                $this->questions = $survey->questionsNotAnswered($this->entry)->withoutSection()->get();
+                $this->questions = $survey->questions()->notAnswered($this->entry)->inRandomOrder()->withoutSection()->get();
             }
         } else {
             $this->section = null;
-            $this->questions = $survey->questionsNotAnswered($this->entry)->withoutSection()->get();
+            $this->questions = $survey->questions()->notAnswered($this->entry)->inRandomOrder()->withoutSection()->get();
         }
+    }
+
+    public function select($question_id, $option_id)
+    {
+        $this->single[$question_id] = $option_id;
     }
 
     protected function currentSection($survey, $entry)
     {
         foreach ($survey->sections as $section) {
-            $hasQuestions = $section->questionsNotAnswered($entry)->exists();
+            $hasQuestions = $section->questions()->notAnswered($entry)->exists();
             if ($hasQuestions) {
                 return $section;
             }
@@ -72,7 +78,7 @@ class Survey extends Component
     public function render()
     {
         if ($this->limit_exceeded) {
-            return view('lw-survey::no_more_tries');
+            return view('lw-survey::livewire.no_more_tries');
         } else {
             return view('lw-survey::livewire.survey');
         }
@@ -92,7 +98,7 @@ class Survey extends Component
         return $answer;
     }
 
-    public function answer()
+    public function save()
     {
         foreach ($this->questions as $question) {
             $content = null;
@@ -132,7 +138,7 @@ class Survey extends Component
         $this->multiple = [];
         $this->single = [];
         $this->text = [];
-        $this->setup($this->survey);
+        $this->setup($this->survey->load(['questions', 'sections.questions']));
         if ($this->questions->count() == 0 && $this->survey->questions->count() > 0) {
             $this->entry->completed_at = Carbon::now();
             $this->entry->update();

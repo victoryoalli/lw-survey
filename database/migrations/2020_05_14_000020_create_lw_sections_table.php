@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSectionsTable extends Migration
+class CreateLwSectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateSectionsTable extends Migration
     public function up()
     {
         Schema::create(config('lw-survey.database.tables.sections'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name');
             $table->foreignId('survey_id');
             $table->timestamps();

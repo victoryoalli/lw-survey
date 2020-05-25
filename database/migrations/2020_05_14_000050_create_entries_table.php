@@ -14,7 +14,7 @@ class CreateEntriesTable extends Migration
     public function up()
     {
         Schema::create(config('lw-survey.database.tables.entries'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->foreignId('survey_id');
             $table->foreignId('user_id')->nullable();
             $table->dateTime('completed_at')->nullable();
