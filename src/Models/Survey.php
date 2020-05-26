@@ -56,6 +56,10 @@ class Survey extends Model
         return false;
     }
 
+    public function scopeEntryUser($query,$user){
+        
+    }
+
     public function questionsNotAnswered(Entry $entry = null)
     {
         return $this->questions()->notAnswered($entry);
@@ -89,6 +93,16 @@ class Survey extends Model
     public function setQuestionsPerPageAttribute($value)
     {
         $this->settings = collect($this->settings)->put('questions_per_page', $value);
+    }
+
+    public function getApprovedGradeAttribute()
+    {
+        return $this->settings == null ? 80 : $this->settings->get('approved_grade') ?? 80;
+    }
+
+    public function setApprovedGradeAttribute($value)
+    {
+        $this->settings = collect($this->settings)->put('approved_grade', $value);
     }
 
     protected static function boot()

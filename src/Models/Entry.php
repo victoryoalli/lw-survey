@@ -18,7 +18,14 @@ class Entry extends Model
     {
         return $this->belongsTo(config('lw-survey.models.user'), config('lw-survey.models.user_id'));
     }
+    public function survey()
+    {
+        return $this->belongsTo(config('lw-survey.models.survey'), config('lw-survey.models.survey_id'));
+    }
     public function answers(){
         return $this->hasMany(Answer::class);
+    }
+    public function getApprovedAttribute(){
+        return $this->percentage >= $this->survey->approved_grade;
     }
 }

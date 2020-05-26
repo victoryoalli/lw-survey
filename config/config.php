@@ -6,7 +6,9 @@
 return [
     'models' => [
         'user' => 'App\Models\User',
+        'survey' => 'App\Models\Survey',
         'user_id' => 'user_id',
+        'survey_id' => 'survey_id',
     ],
     'database' => [
         'tables' => [

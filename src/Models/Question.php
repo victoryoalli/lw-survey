@@ -40,6 +40,9 @@ class Question extends Model
     {
         return $this->hasMany(Option::class);
     }
+    public function getNumberOptionsAttribute(){
+        return $this->options()->count();
+    }
 
     public function scopeNotAnswered($query, Entry $entry = null)
     {
