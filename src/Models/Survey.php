@@ -56,8 +56,8 @@ class Survey extends Model
         return false;
     }
 
-    public function scopeEntryUser($query,$user){
-        
+    public function approvedEntry($user_id){
+        return $this->entries()->where('user_id',$user_id)->where('percentage','>=',$this->approved_grade)->orderBy('percentage','desc')->first();
     }
 
     public function questionsNotAnswered(Entry $entry = null)
