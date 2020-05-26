@@ -97,7 +97,8 @@ class Survey extends Model
 
     public function getApprovedGradeAttribute()
     {
-        return $this->settings == null ? 80 : $this->settings->get('approved_grade') ?? 80;
+        $default = 85;
+        return $this->settings == null ? $default : $this->settings->get('approved_grade') ?? $default;
     }
 
     public function setApprovedGradeAttribute($value)

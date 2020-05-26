@@ -8,6 +8,7 @@ use VictorYoalli\LwSurvey\Models\Entry;
 use VictorYoalli\LwSurvey\Models\Option;
 use VictorYoalli\LwSurvey\Models\Survey as ModelSurvey;
 use Carbon\Carbon;
+use VictorYoalli\LwSurvey\Models\Question;
 use VictorYoalli\LwSurvey\Models\QuestionType;
 
 class Survey extends Component
@@ -34,7 +35,14 @@ class Survey extends Component
         }
         $model_user_name = app(config('lw-survey.models.user'));
         $this->user = $model_user_name->find($user_id);
-        if (!$survey->limitExceeded($this->user->id)) {
+        $approved = $survey->approvedEntry($this->user->id);
+        if(!is_null($approved)){
+            $this->questions =  Question::where('id')->get();
+            $this->points =     $approved->points;
+            $this->max_points = $approved->max_points;
+            $this->percentage = $approved->percentage;
+        }
+        elseif (!$survey->limitExceeded($this->user->id)) {
             $this->entry = Entry::firstOrCreate(['user_id' => $user_id, 'survey_id' => $survey->id, 'completed_at' => null]);
             $this->setup($survey);
         } else {

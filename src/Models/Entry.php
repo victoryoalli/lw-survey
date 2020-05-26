@@ -25,7 +25,4 @@ class Entry extends Model
     public function answers(){
         return $this->hasMany(Answer::class);
     }
-    public function getApprovedAttribute(){
-        return $this->percentage >= $this->survey->approved_grade;
-    }
 }

@@ -28,7 +28,6 @@
             @if($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$single)
             <div style="display:flex; margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
-
                     <div style="@if(isset($single[$question->id]) && $single[$question->id]==$option->id) border:3px solid blue; @endif margin:.25rem; padding:1rem; background-color:gray;" wire:click="select({{$question->id}},{{$option->id}})">
                         <span style="margin: auto 1rem;">{{$option->content}}</span>
                     </div>
