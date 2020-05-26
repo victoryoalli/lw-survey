@@ -1,6 +1,5 @@
 <div style="margin:1rem; padding:1rem; border:1px solid;border-color:#d2d6dd;border-radius:0.25rem;">
     <h1 style="margin:1rem auto .5rem; font-size:2.5em;">{{$survey->name}}</h1>
-    <pre>{{json_encode($single)}}</pre>
     @if($section)
         <h2 style="margin:1rem auto .5rem; font-size:2em;">{{$section->name}}</h2>
     @endif
@@ -8,28 +7,40 @@
         <p>No hay preguntas</p>
     @elseif($questions->count()==0)
         <p>Finished</p>
+        @if($survey->survey_type_id == VictorYoalli\LwSurvey\Models\SurveyType::$exam)
+            <div style="display:flex">
+                <p>Points :</p>
+                <p>{{$points}}</p>
+            </div>
+            <div style="display:flex">
+                <p>Max Points :</p>
+                <p>{{$max_points}}</p>
+            </div>
+            <div style="display:flex">
+                <p>Percentage :</p>
+                <p>{{$percentage}}</p>
+            </div>
+        @endif
     @elseif($survey->questions->count()>0)
         @foreach($questions as $question)
         <div style="margin-top:2rem;">
             <p style="font-size:1.25em;"> {{$question->content}} </p>
             @if($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$single)
-            <div style="margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
+            <div style="display:flex; margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
-                <label style="margin-right: 1rem; padding: .5rem;">
-                    {{--<input id="{{'question_single'.$question->id.$option->id}}" name="{{'question_single'.$question->id}}" value="{{$option->id}}" wire:model="single.{{$question->id}}" type="radio" />--}}
-                    <div style="padding:1rem; background-color:gray;" wire:click="select({{$question->id}},{{$option->id}})">
-                    <span style="margin: auto 1rem;">{{$option->content}}</span>
+
+                    <div style="@if(isset($single[$question->id]) && $single[$question->id]==$option->id) border:3px solid blue; @endif margin:.25rem; padding:1rem; background-color:gray;" wire:click="select({{$question->id}},{{$option->id}})">
+                        <span style="margin: auto 1rem;">{{$option->content}}</span>
                     </div>
-                </label>
                 @endforeach
             </div>
             @elseif($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$multiple)
-            <div style="margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
+            <div style="display:flex;margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
-                <label style="margin-right: 1rem; padding: .5rem;">
-                    <input name="question_multiple[]" id="" wire:model="multiple.{{ $question->id }}.{{$option->id}}" id="{{'question_check'.$question->id.$option->id}}" name="{{'question_check'.$question->id.$option->id}}" type="checkbox" />
+
+                <div style="@if(isset($multiple[$question->id]) &&isset($multiple[$question->id][$option->id]) &&$multiple[$question->id][$option->id]==true ) border:3px solid blue; @endif margin:1rem;padding:1rem;background-color:#ccc;" wire:click="multipleSelect({{$question->id}},{{$option->id}})">
                     <span style="margin:auto 1rem;"> {{$option->content}} </span>
-                </label>
+                </div>
                 @endforeach
             </div>
             @elseif($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$text)

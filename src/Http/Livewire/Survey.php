@@ -18,9 +18,12 @@ class Survey extends Component
     public $questions = [];
     public $user;
     public $multiple = [];
-    public $single = [];
-    public $text = [];
+    public $single = null;
+    public $text = '';
     public $section = null;
+    public $points = null;
+    public $max_points = null;
+    public $percentage = null;
 
     public function mount(ModelSurvey $survey, $user_id)
     {
@@ -62,6 +65,19 @@ class Survey extends Component
     public function select($question_id, $option_id)
     {
         $this->single[$question_id] = $option_id;
+    }
+
+    public function multipleValue($question_id, $option_id)
+    {
+        return true;
+        $value = $this->multiple[$question_id][$option_id] ?? false;
+        return $value;
+    }
+
+    public function multipleSelect($question_id, $option_id)
+    {
+        $value = $this->multiple[$question_id][$option_id] ?? false;
+        $this->multiple[$question_id][$option_id] = !$value;
     }
 
     protected function currentSection($survey, $entry)
@@ -140,7 +156,13 @@ class Survey extends Component
         $this->text = [];
         $this->setup($this->survey->load(['questions', 'sections.questions']));
         if ($this->questions->count() == 0 && $this->survey->questions->count() > 0) {
+            $this->points = $this->entry->answers->sum('points');
+            $this->max_points = $this->survey->questions->sum('points');
+            $this->percentage = $this->points/$this->max_points*100;
             $this->entry->completed_at = Carbon::now();
+            $this->entry->points = $this->points;
+            $this->entry->max_points = $this->max_points;
+            $this->entry->percentage = $this->percentage;
             $this->entry->update();
         }
     }

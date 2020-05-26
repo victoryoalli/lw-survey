@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOptionsTable extends Migration
+class CreateLwSurveysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('lw-survey.database.tables.options'), function (Blueprint $table) {
+        Schema::create(config('lw-survey.database.tables.surveys'), function (Blueprint $table) {
             $table->id();
-            $table->foreignId('question_id');
-            $table->text('content');//html
-            $table->unsignedInteger('value')->nullable();
-            $table->unsignedInteger('position')->default(0);
+            $table->string('name');
+            $table->unsignedInteger('survey_type_id');
+            $table->string('slug')->nullable();
+            $table->json('settings')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(config('lw-survey.database.tables.options'));
+        Schema::dropIfExists(config('lw-survey.database.tables.surveys'));
     }
 }

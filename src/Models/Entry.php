@@ -18,4 +18,7 @@ class Entry extends Model
     {
         return $this->belongsTo(config('lw-survey.models.user'), config('lw-survey.models.user_id'));
     }
+    public function answers(){
+        return $this->hasMany(Answer::class);
+    }
 }

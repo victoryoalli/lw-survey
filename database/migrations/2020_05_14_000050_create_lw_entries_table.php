@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEntriesTable extends Migration
+class CreateLwEntriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,6 +17,9 @@ class CreateEntriesTable extends Migration
             $table->id();
             $table->foreignId('survey_id');
             $table->foreignId('user_id')->nullable();
+            $table->unsignedInteger('max_points')->default(0);
+            $table->unsignedInteger('points')->default(0);
+            $table->decimal('percentage',18,2)->default(0);
             $table->dateTime('completed_at')->nullable();
             $table->timestamps();
         });

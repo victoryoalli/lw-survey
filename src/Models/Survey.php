@@ -15,7 +15,7 @@ class Survey extends Model
         $this->setTable(config('lw-survey.database.tables.surveys'));
     }
 
-    protected $fillable = ['name', 'setting'];
+    protected $fillable = ['name','survey_type_id','setting'];
 
     protected $casts = ['settings' => 'collection'];
 

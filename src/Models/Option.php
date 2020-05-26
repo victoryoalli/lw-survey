@@ -18,4 +18,26 @@ class Option extends Model
     {
         return $this->belongsTo(Question::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        //Ensure the question's survey is the same as the section it belongs to.
+        static::saved(function (self $option) {
+            $option->load('question');
+            $question = $option->question;
+            $question->load('options');
+            $options = $question->options;
+            $points = 0;
+            if($question->question_type_id == QuestionType::$single){
+                $question->points = $options->max('value');
+                $question->save();
+            }
+            elseif($question->question_type_id == QuestionType::$multiple){
+                $question->points = $options->sum('value');
+                $question->save();
+            }
+        });
+    }
 }
