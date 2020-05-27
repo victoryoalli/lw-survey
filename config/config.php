@@ -13,6 +13,8 @@ return [
     'database' => [
         'tables' => [
             'surveys' => 'lw_surveys',
+            'survey_types' => 'lw_survey_types',
+            'question_types' => 'lw_question_types',
             'sections' => 'lw_sections',
             'questions' => 'lw_questions',
             'options' => 'lw_options',

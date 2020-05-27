@@ -20,16 +20,19 @@ class LwSurveyServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('lw-survey.php'),
-            ], ['config', 'lw-survey']);
+            ], ['lw-survey-config', 'lw-survey']);
 
             // Publishing the views.
             $this->publishes([
                 __DIR__ . '/../resources/views' => resource_path('views/vendor/lw-survey'),
-            ], ['views', 'lw-survey']);
+            ], ['lw-survey-views', 'lw-survey']);
 
             $this->publishes([
                 __DIR__ . '/../database/migrations/' => database_path('migrations'),
-            ], ['migrations', 'lw-survey']);
+            ], ['lw-survey-migrations', 'lw-survey']);
+            $this->publishes([
+                __DIR__ . '/../database/seeds/' => database_path('seeds'),
+            ], ['lw-survey-seeds', 'lw-survey']);
 
             // Publishing assets.
             /*$this->publishes([
@@ -39,7 +42,7 @@ class LwSurveyServiceProvider extends ServiceProvider
             // Publishing the translation files.
             $this->publishes([
                 __DIR__ . '/../resources/lang' => resource_path('lang/vendor/lw-survey'),
-            ], ['lang', 'lw-survey']);
+            ], ['lw-survey-lang', 'lw-survey']);
 
             // Registering package commands.
             // $this->commands([]);

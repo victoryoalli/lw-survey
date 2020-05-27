@@ -7,7 +7,7 @@
         <p>No hay preguntas</p>
     @elseif($questions->count()==0)
         <p>Finished</p>
-        @if($survey->survey_type_id == VictorYoalli\LwSurvey\Models\SurveyType::$exam)
+        @if($survey->survey_type->keyname == VictorYoalli\LwSurvey\Models\SurveyType::EXAM)
             <div style="display:flex">
                 <p>Points :</p>
                 <p>{{$points}}</p>
@@ -25,7 +25,7 @@
         @foreach($questions as $question)
         <div style="margin-top:2rem;">
             <p style="font-size:1.25em;"> {{$question->content}} </p>
-            @if($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$single)
+            @if($question->question_type->keyname == VictorYoalli\LwSurvey\Models\QuestionType::SINGLE)
             <div style="display:flex; margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
                     <div style="@if(isset($single[$question->id]) && $single[$question->id]==$option->id) border:3px solid blue; @endif margin:.25rem; padding:1rem; background-color:gray;" wire:click="select({{$question->id}},{{$option->id}})">
@@ -33,7 +33,7 @@
                     </div>
                 @endforeach
             </div>
-            @elseif($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$multiple)
+            @elseif($question->question_type->keyname == VictorYoalli\LwSurvey\Models\QuestionType::MULTIPLE)
             <div style="display:flex;margin-left:.5em;margin-right:.5em;align-items: center;margin-top: 1em">
                 @foreach($question->options as $option)
 
@@ -42,7 +42,7 @@
                 </div>
                 @endforeach
             </div>
-            @elseif($question->question_type->id == VictorYoalli\LwSurvey\Models\QuestionType::$text)
+            @elseif($question->question_type->keyname == VictorYoalli\LwSurvey\Models\QuestionType::TEXT)
             <div style="margin-top: 1em">
                 <input style="width:100%; margin:0 auto 1rem ; line-height: 1.8rem;padding:.5rem;font-size:1.2em; border-radius: 5px; border:1px solid #999;" type="text" wire:model="text.{{$question->id}}" id="{{'question_'.$question->id}}"/>
             </div>

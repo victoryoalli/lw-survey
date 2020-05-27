@@ -20,7 +20,7 @@ class CreateLwQuestionsTable extends Migration
             $table->foreignId('section_id')->nullable();
             $table->text('content');
             $table->unsignedInteger('position')->default(0);
-            $table->unsignedInteger('question_type_id')->default(QuestionType::$single); //text,radio,checkbox,select
+            $table->unsignedInteger('question_type_id')->default(1); //text,radio,checkbox,select
             $table->json('rules')->nullable();//number:min,max, email
             $table->unsignedInteger('points')->default(0);
             $table->timestamps();

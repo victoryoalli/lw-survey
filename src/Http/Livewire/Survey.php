@@ -129,8 +129,8 @@ class Survey extends Component
             $points = null;
             $option_id = null;
             $option = null;
-            switch ($question->question_type->id) {
-                case QuestionType::$single:
+            switch ($question->question_type->keyname) {
+                case QuestionType::SINGLE:
                     $option = isset($this->single[$question->id]) ? $this->single[$question->id] : null;
                     if (!is_null($option)) {
                         $option = Option::find($option);
@@ -139,7 +139,7 @@ class Survey extends Component
                         $this->saveAnswer($question, $option_id, $points, $content);
                     }
                     break;
-                case QuestionType::$multiple:
+                case QuestionType::MULTIPLE:
                     if (isset($this->multiple[$question->id])) {
                         foreach ($this->multiple[$question->id] as $key => $option) {
                             if ($option) {
@@ -151,7 +151,7 @@ class Survey extends Component
                         }
                     }
                     break;
-                case QuestionType::$text:
+                case QuestionType::TEXT:
                     if (isset($this->text[$question->id])) {
                         $content = $this->text[$question->id];
                         $this->saveAnswer($question, $option_id, $points, $content);

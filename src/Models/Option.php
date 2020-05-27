@@ -30,11 +30,11 @@ class Option extends Model
             $question->load('options');
             $options = $question->options;
             $points = 0;
-            if($question->question_type_id == QuestionType::$single){
+            if($question->question_type->keyname == QuestionType::SINGLE){
                 $question->points = $options->max('value');
                 $question->save();
             }
-            elseif($question->question_type_id == QuestionType::$multiple){
+            elseif($question->question_type->keyname == QuestionType::MULTIPLE){
                 $question->points = $options->sum('value');
                 $question->save();
             }

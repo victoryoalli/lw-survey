@@ -6,21 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class QuestionType extends Model
 {
-    use \Sushi\Sushi;
-
-    public static $single = 1;
-    public static $multiple = 2;
-    public static $text = 3;
-
-    protected $schema = ['id' => 'integer'];
-    protected $casts = ['rules' => 'array'];
-
-    public function getRows()
+    public function __construct(array $attributes = [])
     {
-        return [
-            ['id' => static::$single, 'name' => 'single', ],
-            ['id' => static::$multiple, 'name' => 'multiple', ],
-            ['id' => static::$text, 'name' => 'text', ],
-        ];
+        parent::__construct($attributes);
+        $this->setTable(config('lw-survey.database.tables.question_types','lw_question_types'));
     }
+
+    const SINGLE = 'single';
+    const  MULTIPLE = 'multiple';
+    const TEXT = 'text';
+
+    protected $casts = ['rules' => 'array'];
 }

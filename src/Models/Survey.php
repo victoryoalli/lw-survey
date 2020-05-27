@@ -19,6 +19,10 @@ class Survey extends Model
 
     protected $casts = ['settings' => 'collection'];
 
+    public function survey_type(){
+        return $this->belongsTo(SurveyType::class);
+    }
+
     public function sections()
     {
         return $this->hasMany(Section::class);
