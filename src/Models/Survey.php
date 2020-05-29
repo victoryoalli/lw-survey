@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Survey extends Model
 {
-    protected $appends = ['limit_entries_participant'];
+    // protected $appends = ['limit_entries_per_participant'];
 
     public function __construct(array $attributes = [])
     {
@@ -15,11 +15,12 @@ class Survey extends Model
         $this->setTable(config('lw-survey.database.tables.surveys'));
     }
 
-    protected $fillable = ['name','survey_type_id','setting'];
+    protected $fillable = ['name', 'survey_type_id', 'setting'];
 
     protected $casts = ['settings' => 'collection'];
 
-    public function survey_type(){
+    public function survey_type()
+    {
         return $this->belongsTo(SurveyType::class);
     }
 
@@ -60,8 +61,9 @@ class Survey extends Model
         return false;
     }
 
-    public function approvedEntry($user_id){
-        return $this->entries()->where('user_id',$user_id)->where('percentage','>=',$this->approved_grade)->orderBy('percentage','desc')->first();
+    public function approvedEntry($user_id)
+    {
+        return $this->entries()->where('user_id', $user_id)->where('percentage', '>=', $this->approved_grade)->orderBy('percentage', 'desc')->first();
     }
 
     public function questionsNotAnswered(Entry $entry = null)
