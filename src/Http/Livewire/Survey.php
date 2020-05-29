@@ -8,6 +8,7 @@ use VictorYoalli\LwSurvey\Models\Entry;
 use VictorYoalli\LwSurvey\Models\Option;
 use VictorYoalli\LwSurvey\Models\Survey as ModelSurvey;
 use Carbon\Carbon;
+use VictorYoalli\LwSurvey\Events\SurveyApproved;
 use VictorYoalli\LwSurvey\Models\Question;
 use VictorYoalli\LwSurvey\Models\QuestionType;
 
@@ -172,6 +173,10 @@ class Survey extends Component
             $this->entry->max_points = $this->max_points;
             $this->entry->percentage = $this->percentage;
             $this->entry->update();
+            
+            // event(new SurveyApproved($survey,$entry));
+            if($this->entry->percentage >= $this->survey->approved_grade)
+                event(new SurveyApproved($this->survey,$this->entry));
         }
     }
 }
