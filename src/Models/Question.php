@@ -49,8 +49,6 @@ class Question extends Model
         return $query->whereDoesntHave('answers', function ($q) use ($entry) {
             return $q->where('entry_id', $entry->id);
         });
-        // $answers = Answer::where('entry_id',$entry->id)->get()->pluck('question_id');
-        //return $query->whereNotIn('id',$answers);
     }
 
     public function scopeWithoutSection($query)
