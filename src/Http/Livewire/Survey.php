@@ -63,11 +63,21 @@ class Survey extends Component
                     $this->questions = $query->get();
                 }
             } else {
-                $this->questions = $survey->questions()->notAnswered($this->entry)->inRandomOrder()->withoutSection()->get();
+                $query = $survey->questions()->notAnswered($this->entry)->inRandomOrder()->withoutSection();
+                if ($survey->group_questions_per_section && $survey->questions_per_page > 0) {
+                    $this->questions = $query->take($survey->questions_per_page)->get();
+                }else{
+                    $this->questions = $query->get();
+                }
             }
         } else {
             $this->section = null;
-            $this->questions = $survey->questions()->notAnswered($this->entry)->inRandomOrder()->withoutSection()->get();
+            $query = $survey->questions()->notAnswered($this->entry)->inRandomOrder()->withoutSection();
+            if ($survey->group_questions_per_section && $survey->questions_per_page > 0) {
+                $this->questions = $query->take($survey->questions_per_page)->get();
+            }else{
+                $this->questions = $query->get();
+            }
         }
     }
 
@@ -167,7 +177,7 @@ class Survey extends Component
         if ($this->questions->count() == 0 && $this->survey->questions->count() > 0) {
             $this->points = $this->entry->answers->sum('points');
             $this->max_points = $this->survey->questions->sum('points');
-            $this->percentage = $this->points/$this->max_points*100;
+            $this->percentage = $this->points/($this->max_points==0?1:$this->max_points)*100;
             $this->entry->completed_at = Carbon::now();
             $this->entry->points = $this->points;
             $this->entry->max_points = $this->max_points;
